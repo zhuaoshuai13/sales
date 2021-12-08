@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Admin() {
+export default function Inventory() {
   return (
     <div>
-      管理员
+      库存查看
     </div>
   )
 }

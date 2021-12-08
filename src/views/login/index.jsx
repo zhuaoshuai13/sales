@@ -6,12 +6,16 @@ import { login } from '../../api/user';
 import { loginSuccessAction } from '../../actions/user';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-let script = document.createElement('script');
-script.type = 'text/javascript'
-script.async = true;
-script.src = '//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js';
-document.head.appendChild(script);
+
+// let script = document.createElement('script');
+// script.className = 'test'
+// script.type = 'text/javascript'
+// script.async = true;
+// script.src = '//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js';
+// document.head.appendChild(script);
+
 function Login(props) {
+  useEffect(() => {console.log('login页面销毁');})
   const onFinish = (values) => {
     login(values).then((data) => {
       if (data.isSuccess) {
