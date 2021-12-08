@@ -1,9 +1,6 @@
 import React from 'react'
+import renderRoutes from '../../utils/render-routes'
 
-export default function Employees() {
-  return (
-    <div>
-      员工管理
-    </div>
-  )
+export default function Employees(props) {
+  return renderRoutes(props.route.children)
 }
