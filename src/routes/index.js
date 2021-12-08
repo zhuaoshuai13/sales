@@ -60,5 +60,19 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/',
+    component: FrameLayout,
+    children: [
+      {
+        path: '/dashboard',
+        component: Dashboard,
+        meta: {
+          title: '员工',
+          icon: HomeOutlined,
+        },
+      },
+    ],
+  },
 ]
 export default routes

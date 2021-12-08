@@ -11,10 +11,8 @@ const { SubMenu } = Menu;
 // eslint-disable-next-line react/prop-types
 function FrameLayout({route}) {
 
-  const user = useSelector((state) => {
-    console.log(state);
-    return state.user
-  })
+  const user = useSelector((state) => state.user)
+
   const history = useHistory()
   // 侧边菜单状态
   const [collapsed, setCollapsed] = useState(false);
@@ -43,7 +41,7 @@ function FrameLayout({route}) {
 
   // 定义函数实现侧边导航渲染
   const renderMenu = () => {
-    const menus = routes[1].children
+    const menus = routes[user.type].children
     const renderMenuItem = (menus) => menus.map((menu) => {
       if (menu.children) {
         // 有子菜单
@@ -65,7 +63,7 @@ function FrameLayout({route}) {
     return (
       <Menu
         theme="dark"
-        defaultSelectedKeys={'/dashboard'}
+        defaultSelectedKeys={history.location.pathname}
         mode="inline"
         onClick={handleNav}>
         {renderMenuItem(menus)}
@@ -91,11 +89,8 @@ function FrameLayout({route}) {
           </Dropdown>
 
         </Header>
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
+        <Content style={{ margin: '16px 16px' }}>
+
           <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
             {
               // eslint-disable-next-line react/prop-types

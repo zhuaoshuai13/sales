@@ -3,6 +3,7 @@ import _ from 'loadsh'
 const initialState = {
   username: null,
   token: null,
+  type: null,
 }
 const userReducer = (state = initialState, { type, payload }) => {
   const copy = _.cloneDeep(state)
@@ -11,6 +12,7 @@ const userReducer = (state = initialState, { type, payload }) => {
   case LOGIN_SUCCESS:
     copy.username = payload.username
     copy.token = payload.token
+    copy.type = payload.type
     console.log(copy);
     return copy
   default:
