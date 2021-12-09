@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
-import { Form, Input, Button, Select, Col, ConfigProvider, Table, InputNumber, Popconfirm, Typography,
+import { Form, Input, Button, Select, Col, ConfigProvider, Table, InputNumber, Popconfirm, Typography, notification,
 } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
 import './purchase.less'
+import {toStore}  from '../../../api/store';
 export default function Purchase() {
   // 表单部分
   const date = new Date()
@@ -62,7 +64,7 @@ export default function Purchase() {
   }) => {
     const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
     return (
-      <td {...restProps}>
+      <td{...restProps}>
         {editing ? (
           <Form.Item
             name={dataIndex}
@@ -87,11 +89,12 @@ export default function Purchase() {
   const [forms] = Form.useForm();
   const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState('');
-  const [totalPrice, setTotalPrice] = useState(0)
-  const [totalNumber, setTotalNumber] = useState(0)
-  console.log(data.reduce((acc, cur) => acc += parseInt(cur.number), 0));
-  // setTotalNumber(data.reduce((acc, cur) => acc += parseInt(cur.number), 0))
-  // console.log(totalNumber);
+  const totalNumber = function() {
+    return data.reduce((acc, cur) => acc += parseInt(cur.number), 0)
+  }
+  const totalPrice = function() {
+    return data.reduce((acc, cur) => acc += parseInt(cur.purchase_price) * parseInt(cur.number), 0)
+  }
   const isEditing = (record) => record.key === editingKey;
   const edit = (record) => {
     forms.setFieldsValue({
@@ -226,6 +229,23 @@ export default function Purchase() {
       }),
     };
   });
+
+  // 入库按钮
+  const store = () => {
+    console.log('入库', data);
+    // const newData = []
+    toStore(data);
+    openNotification()
+    setData([])
+  }
+
+  const openNotification = () => {
+    notification.open({
+      message: '商品入库成功！',
+      icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+      duration: 0.5,
+    });
+  };
   return (
     <>
       <ConfigProvider form={{ validateMessages }}>
@@ -339,14 +359,17 @@ export default function Purchase() {
           columns={mergedColumns}
           rowClassName="editable-row"
           pagination={false}
-          summary={() => !data.length ? '' : (<Table.Summary.Row>
+          summary={() => !data.length ? (<Table.Summary.Row>
+            <Table.Summary.Cell colSpan={0}>
+            </Table.Summary.Cell>
+          </Table.Summary.Row>) : (<Table.Summary.Row>
             <Table.Summary.Cell colSpan={8}>
-              <span id="spa">总金额：</span>
-              <span>总件数：</span>
+              <span id="spa">总件数：{totalNumber()}</span><span>总金额：{totalPrice()}</span>
             </Table.Summary.Cell>
           </Table.Summary.Row>)}
         />
       </Form>
+      <Button type="primary" onClick={store} disabled={!data.length}>入库</Button>
     </>
   )
 }

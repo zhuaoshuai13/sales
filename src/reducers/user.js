@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS } from '../actions/constants'
+import { LOGIN_SUCCESS, LOGOUT } from '../actions/constants'
 import _ from 'loadsh'
 const initialState = {
   username: null,
@@ -13,7 +13,11 @@ const userReducer = (state = initialState, { type, payload }) => {
     copy.username = payload.username
     copy.token = payload.token
     copy.type = payload.type
-    console.log(copy);
+    return copy
+  case LOGOUT:
+    copy.username = null
+    copy.token = null
+    copy.type = null
     return copy
   default:
     return state

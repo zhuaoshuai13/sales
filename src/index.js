@@ -4,10 +4,11 @@ import App from './App'
 import { HashRouter as Router} from 'react-router-dom';
 import 'antd/dist/antd.less'
 import { Provider } from 'react-redux'
-import storeFN from './store'
+// import storeFN from './store'
+import { store, persistor } from './store'
 import { PersistGate } from 'redux-persist/integration/react'
 
-const {store, persistor} = storeFN()
+// const {store, persistor} = storeFN()
 render(
   <Provider store={store}>
     <Router>
