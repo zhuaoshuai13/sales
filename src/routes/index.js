@@ -5,11 +5,14 @@ import Purchase from '../views/admins/inventories/purchase'
 import FrameLayout from '../layout/frame-layout';
 import Inventorys from '../views/admins/inventories'
 import Sale from '../views/admins/sale'
+import Self from '../views/employees/self';
+import Market from '../views/sales/market';
 import {
   HomeOutlined,
   ZoomInOutlined,
   RiseOutlined,
 } from '@ant-design/icons';
+
 const routes = [
   {
     path: '/login',
@@ -68,8 +71,34 @@ const routes = [
         path: '/dashboard',
         component: Dashboard,
         meta: {
-          title: '员工',
+          title: '首页',
           icon: HomeOutlined,
+        },
+      }, {
+        path: '/self',
+        component: Self,
+        meta: {
+          title: '个人中心',
+        },
+      },
+    ],
+  },
+  {
+    path: '/',
+    component: FrameLayout,
+    children: [
+      {
+        path: '/dashboard',
+        component: Dashboard,
+        meta: {
+          title: '首页',
+          icon: HomeOutlined,
+        },
+      }, {
+        path: '/market',
+        component: Market,
+        meta: {
+          title: '在线销售',
         },
       },
     ],

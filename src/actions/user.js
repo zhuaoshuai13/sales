@@ -14,3 +14,6 @@ export const loginSuccessAction = (user) => {
   })
 }
 
+// 用户退出登录
+export const logout = () => ({type: LOGOUT})
+

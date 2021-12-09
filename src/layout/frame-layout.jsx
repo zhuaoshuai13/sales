@@ -1,18 +1,19 @@
 import React, {useState} from 'react'
-import { Layout, Menu, Breadcrumb, Dropdown, Avatar, Image  } from 'antd';
+import { Layout, Menu, Breadcrumb, Dropdown, Avatar, Image, Popconfirm, Modal } from 'antd';
 import {withRouter, useHistory, Redirect} from 'react-router-dom';
 import renderRoutes from '../utils/render-routes'
 import routes from '../routes'
 import { useSelector, useDispatch  } from 'react-redux';
+import { logout } from '../actions/user';
 import './style.less'
 const { Header, Content, Footer, Sider } = Layout;
+const { confirm } = Modal;
 const { SubMenu } = Menu;
-
 // eslint-disable-next-line react/prop-types
 function FrameLayout({route}) {
 
   const user = useSelector((state) => state.user)
-
+  const dispatch = useDispatch()
   const history = useHistory()
   // 侧边菜单状态
   const [collapsed, setCollapsed] = useState(false);
@@ -20,6 +21,21 @@ function FrameLayout({route}) {
   // 侧标菜单收起
   const onCollapse = (collapsed) => setCollapsed(collapsed);
 
+
+  function showConfirm() {
+    confirm({
+      title: '是否确定退出?',
+      // icon: <ExclamationCircleOutlined />,
+      okText: '确认',
+      cancelText: '取消',
+      onOk() {
+        dispatch(logout())
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
   // 点击跳转页面
   // eslint-disable-next-line react/prop-types
   const handleNav = ({key}) => history.push(key)
@@ -29,13 +45,18 @@ function FrameLayout({route}) {
       console.log('修改密码');
       break
     case '2':
-      console.log('登出');
+      showConfirm()
     }
   }
+
+  // const out = () => dispatch(logout())
+
   const perosonlogog = () => (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="1">修改密码</Menu.Item>
-      <Menu.Item key="2">退出登录</Menu.Item>
+      <Menu.Item key="2">
+       退出登录
+      </Menu.Item>
     </Menu>
   );
 
