@@ -1,9 +1,5 @@
 import React from 'react'
-
-export default function Sales() {
-  return (
-    <div>
-      销售端
-    </div>
-  )
+import renderRoutes from '../../utils/render-routes'
+export default function Sales(props) {
+  return renderRoutes(props.route.children)
 }
