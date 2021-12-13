@@ -12,6 +12,9 @@ const { confirm } = Modal;
 const { SubMenu } = Menu;
 // eslint-disable-next-line react/prop-types
 function FrameLayout({route, location}) {
+  console.log('刷新');
+  // eslint-disable-next-line react/prop-types
+  console.log(location.pathname);
   // eslint-disable-next-line react/prop-types
   const match = matchRoutes(route.children, location.pathname)
   const user = useSelector((state) => state.user)
@@ -22,7 +25,7 @@ function FrameLayout({route, location}) {
 
   // 侧标菜单收起
   const onCollapse = (collapsed) => setCollapsed(collapsed);
-
+  // eslint-disable-next-line react/prop-types
 
   function showConfirm() {
     confirm({
@@ -86,7 +89,8 @@ function FrameLayout({route, location}) {
     return (
       <Menu
         theme="dark"
-        defaultSelectedKeys={history.location.pathname}
+        // eslint-disable-next-line react/prop-types
+        defaultSelectedKeys={location.pathname}
         mode="inline"
         onClick={handleNav}>
         {renderMenuItem(menus)}

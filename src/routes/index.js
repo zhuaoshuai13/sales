@@ -7,11 +7,13 @@ import Inventorys from '../views/admins/inventories'
 import Sale from '../views/admins/sale'
 import Self from '../views/employees/self';
 import Market from '../views/sales/market';
+import Detail from '../views/admins/detail';
 import {
   HomeOutlined,
   ZoomInOutlined,
   RiseOutlined,
 } from '@ant-design/icons';
+
 
 const routes = [
   {
@@ -58,6 +60,14 @@ const routes = [
         component: Sale,
         meta: {
           title: '销售查看',
+          icon: RiseOutlined,
+        },
+      },
+      {
+        path: '/detail',
+        component: Detail,
+        meta: {
+          title: '商品详情',
           icon: RiseOutlined,
         },
       },

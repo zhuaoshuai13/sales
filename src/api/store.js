@@ -13,3 +13,16 @@ export const getStore = () => request({
   url: API.GET_STORE,
   method: 'GET',
 })
+
+// 销售商品
+export const sellStore = (data) => request({
+  url: API.SELLING,
+  method: 'PUT',
+  data: data,
+})
+
+// 获取销售情况
+export const getSales = () => request({
+  url: API.GET_SALES,
+  method: 'GET',
+})
