@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react'
-import {getStore} from '../../api/store'
-import { Table, Button, Input, Space, Row, Col, Form, Drawer, Select, DatePicker, InputNumber } from 'antd';
+import {getStore, sellStore} from '../../api/store'
+import { Table, Button, Input, Space, Row, Col, Form, Drawer, Select, message, InputNumber } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+
 import './market.less'
 export default function Market() {
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setsearchedColumn] = useState('')
   const [data, setDate] = useState([])
   const [choose, setChoose] = useState([])
+  const [max, setMax] = useState(0)
   useEffect(() => {
     getStore().then((data) => {
       data.forEach((cur) => {cur.key = cur.id})
@@ -95,13 +97,14 @@ export default function Market() {
     setSearchText('')
   };
   const getData = (newData) => {
+    console.log(newData.number);
+    setMax(newData.number)
     newData.sellingNumber = 1
     newData.total_price = newData.selling_price
     form.setFieldsValue(newData);
     setChoose(newData);
     showDrawer()
   }
-
   const columns = [
     {
       title: '货号',
@@ -150,7 +153,7 @@ export default function Market() {
       render: (text) => (
         <div id="orderBtn">
           <Button type="primary" onClick={() => getData(text)}>直接下单</Button>
-          <Button type="primary">暂缓下单</Button>
+          {/* <Button type="primary">暂缓下单</Button> */}
         </div>
       ),
     },
@@ -179,13 +182,32 @@ export default function Market() {
   const onReset = () => {
     form.resetFields();
   };
-  const onClose = (e) => {
+  const onSell = () => {
     setVisible(false);
+    // console.log(form.getFieldValue());
+    sellStore(form.getFieldValue()).then(() => {
+      getStore().then((data) => {
+        data.forEach((cur) => {cur.key = cur.id})
+        setDate(data)
+      })
+    });
+  };
+  const onClose = () => {
+    setVisible(false);
+  }
+  const warning = () => {
+    message.warning(`改商品库存最多为${max}`);
   };
   const changeNumber = (e) => {
+    console.log(e);
+    if (e > max) {
+      warning()
+      e = max
+    }
     let temp =  choose
-    temp.total_price = e * choose.selling_price
     temp.sellingNumber = e
+    temp.total_price = choose.sellingNumber * choose.selling_price
+
     setChoose(temp)
     form.setFieldsValue(temp)
   }
@@ -193,16 +215,16 @@ export default function Market() {
     <div>
       <Table columns={columns} dataSource={data} />
       <Drawer
-        title="Create a new account"
+        title="新的订单"
         width={720}
         onClose={onClose}
         visible={visible}
         bodyStyle={{ paddingBottom: 80 }}
         extra={
           <Space>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={onClose} type="primary">
-                Submit
+            <Button onClick={onClose}>取消</Button>
+            <Button onClick={onSell} type="primary">
+                下单
             </Button>
             <Button onClick={onReset}>
                 重置
@@ -280,11 +302,11 @@ export default function Market() {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="sale_number"
+                name="sale_person"
                 label="销售人员"
                 rules={[{ required: true, message: 'Please choose the dateTime' }]}
               >
-                <Select placeholder="Please choose the approver">
+                <Select placeholder="Please choose the approver" >
                   <Option value="张三">张三</Option>
                   <Option value="李四">李四</Option>
                 </Select>
@@ -321,7 +343,7 @@ export default function Market() {
                   },
                 ]}
               >
-                <Select placeholder="Please choose the approver">
+                <Select placeholder="Please choose the approver" >
                   <Option value="微信">微信</Option>
                   <Option value="支付宝">支付宝</Option>
                   <Option value="现金">现金</Option>

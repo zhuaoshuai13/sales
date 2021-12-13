@@ -3,7 +3,8 @@ import { Table, Input, Button, Space } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
 import { getStore } from '../../../api/store';
-export default function Inventory() {
+import { Link } from 'react-router-dom';
+export default function Inventory(props) {
   const [data, setDate] = useState([])
   useEffect(() => {
     getStore().then((data) => {
@@ -82,6 +83,10 @@ export default function Inventory() {
         text
       ),
   });
+  const detailData = (data) => {
+    // eslint-disable-next-line react/prop-types
+    // props.history.push({pathname: '../../detail', params: data});
+  }
   const columns = [
     {
       title: '货号',
@@ -133,6 +138,19 @@ export default function Inventory() {
       ...getColumnSearchProps('number'),
       sorter: (a, b) => a.number - b.number,
       sortDirections: ['descend', 'ascend'],
+    },
+    {
+      title: '操作',
+      key: 'operation',
+      fixed: 'right',
+      width: 200,
+      render: (text) => (
+        <div id="orderBtn">
+          <Link to="../../detail">
+            <Button type="primary" onClick={() => detailData(text)}>详细信息</Button>
+          </Link>
+        </div>
+      ),
     },
   ];
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
