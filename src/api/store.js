@@ -26,3 +26,8 @@ export const getSales = () => request({
   url: API.GET_SALES,
   method: 'GET',
 })
+
+export const getForm = () => request({
+  url: API.FOMR,
+  method: 'GET',
+})

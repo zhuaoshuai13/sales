@@ -29,6 +29,9 @@ export default function Purchase() {
   const validateMessages = {
     required: ' ',
     // ...
+    types: {
+      number: '${label}必须为数字!',
+    },
   };
 
   // 表格部分
@@ -97,6 +100,7 @@ export default function Purchase() {
   }
   const isEditing = (record) => record.key === editingKey;
   const edit = (record) => {
+    console.log(record);
     forms.setFieldsValue({
       commodity_id: '',
       category: '',
@@ -117,7 +121,11 @@ export default function Purchase() {
     try {
       const row = await forms.validateFields();
       const newData = [...data];
-      console.log(newData);
+      //  TODO:完善修改时，修改后的内容可能不为数字的bug
+      // console.log(newData);
+      // console.log(isNaN(newData.number));
+      // !isNaN(newData.number) ? newData.number = data.number : newData.number = data.number
+      // console.log(newData);
       const index = newData.findIndex((item) => key === item.key);
 
       if (index > -1) {
@@ -155,13 +163,13 @@ export default function Purchase() {
       title: '颜色',
       dataIndex: 'color',
       width: '10%',
-      editable: true,
+      editable: false,
     },
     {
       title: '尺码',
       dataIndex: 'size',
       width: '10%',
-      editable: true,
+      editable: false,
     },
     {
       title: '进价',
@@ -173,7 +181,7 @@ export default function Purchase() {
       title: '售价',
       dataIndex: 'selling_price',
       width: '10%',
-      editable: true,
+      editable: false,
     },
     {
       title: '数量',
@@ -309,6 +317,12 @@ export default function Purchase() {
             rules={[
               {
                 required: true,
+                type: 'number',
+                transform(value) {
+                  if (value) {
+                    return Number(value)
+                  }
+                },
               },
             ]}
           >
@@ -320,17 +334,29 @@ export default function Purchase() {
             rules={[
               {
                 required: true,
+                type: 'number',
+                transform(value) {
+                  if (value) {
+                    return Number(value)
+                  }
+                },
               },
             ]}
           >
-            <Input />
+            <Input/>
           </Form.Item>
           <Form.Item
             name="number"
             label="数量"
             rules={[
               {
+                type: 'number',
                 required: true,
+                transform(value) {
+                  if (value) {
+                    return Number(value)
+                  }
+                },
               },
             ]}
           >

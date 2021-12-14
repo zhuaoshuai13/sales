@@ -12,7 +12,6 @@ const { confirm } = Modal;
 const { SubMenu } = Menu;
 // eslint-disable-next-line react/prop-types
 function FrameLayout({route, location}) {
-  console.log('刷新');
   // eslint-disable-next-line react/prop-types
   console.log(location.pathname);
   // eslint-disable-next-line react/prop-types
