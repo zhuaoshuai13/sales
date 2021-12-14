@@ -5,7 +5,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { getStore } from '../../../api/store';
 import { Link } from 'react-router-dom';
 export default function Inventory(props) {
-  const [current, setCurrent] = useState(parseInt(localStorage.getItem('current')))
+  const [current, setCurrent] = useState(parseInt(1))
   const [data, setDate] = useState([])
   useEffect(() => {
     getStore().then((data) => {
@@ -104,7 +104,7 @@ export default function Inventory(props) {
         return (
           <Image
             width={40}
-            src={`http://localhost:9527/upload/${text.commodity_id}${text.color}.jpg`}
+            src={`http://sb.zhuaoshuai.com/upload/${text.commodity_id}${text.color}.jpg`}
             fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIAAADDCAYAAADQv
             c6UAAABRWlDQ1BJQ0MgUHJvZmlsZQAAKJFjYGASSSwoyGFhYGDIzSspCnJ3UoiIjFJgf8LAwS
             DCIMogwMCcmFxc4BgQ4ANUwgCjUcG3awyMIPqyLsis7PPOq3QdDFcvjV3jOD1boQVTPQrgSkkt

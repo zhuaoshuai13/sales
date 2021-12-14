@@ -60,7 +60,7 @@ export default function Self() {
   return (
     <>
       <Upload
-        action="http://localhost:9527/upload"
+        action="http://sb.zhuaoshuai.com/upload"
         listType="picture-card"
         fileList={fileList}
         onPreview={handlePreview}
