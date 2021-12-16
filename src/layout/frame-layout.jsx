@@ -4,18 +4,13 @@ import {withRouter, useHistory, Redirect} from 'react-router-dom';
 import renderRoutes from '../utils/render-routes'
 import routes from '../routes'
 import { useSelector, useDispatch  } from 'react-redux';
-import { logout } from '../actions/user';
+import { logout } from '../reducers/user'
 import './style.less'
-import matchRoutes from '../utils/match-routes';
+
 const { Header, Content, Footer, Sider } = Layout;
 const { confirm } = Modal;
 const { SubMenu } = Menu;
-// eslint-disable-next-line react/prop-types
 function FrameLayout({route, location}) {
-  // eslint-disable-next-line react/prop-types
-  console.log(location.pathname);
-  // eslint-disable-next-line react/prop-types
-  const match = matchRoutes(route.children, location.pathname)
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const history = useHistory()
@@ -24,7 +19,6 @@ function FrameLayout({route, location}) {
 
   // 侧标菜单收起
   const onCollapse = (collapsed) => setCollapsed(collapsed);
-  // eslint-disable-next-line react/prop-types
 
   function showConfirm() {
     confirm({
@@ -41,7 +35,6 @@ function FrameLayout({route, location}) {
     });
   }
   // 点击跳转页面
-  // eslint-disable-next-line react/prop-types
   const handleNav = ({key}) => history.push(key)
   const handleMenuClick = ({key}) => {
     switch (key) {
@@ -88,7 +81,6 @@ function FrameLayout({route, location}) {
     return (
       <Menu
         theme="dark"
-        // eslint-disable-next-line react/prop-types
         defaultSelectedKeys={location.pathname}
         mode="inline"
         onClick={handleNav}>
@@ -119,7 +111,6 @@ function FrameLayout({route, location}) {
 
           <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
             {
-              // eslint-disable-next-line react/prop-types
               renderRoutes(routes[user.type].children)
             }
           </div>

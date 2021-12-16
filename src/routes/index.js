@@ -8,10 +8,15 @@ import Sale from '../views/admins/sale'
 import Self from '../views/employees/self';
 import Market from '../views/sales/market';
 import Detail from '../views/admins/detail';
+import Activities from '../views/marketing/activities'
+import Minus from '../views/marketing/activities/minus';
 import {
   HomeOutlined,
   ZoomInOutlined,
   RiseOutlined,
+  FileSearchOutlined,
+  FunctionOutlined,
+  SecurityScanOutlined,
 } from '@ant-design/icons';
 
 
@@ -31,13 +36,12 @@ const routes = [
           title: '首页',
           icon: HomeOutlined,
         },
-      },
-      {
+      }, {
         path: '/admin',
         component: Inventorys,
         meta: {
           title: '库存管理',
-          icon: ZoomInOutlined,
+          icon: FileSearchOutlined,
         },
         children: [
           {
@@ -55,12 +59,28 @@ const routes = [
             },
           },
         ],
+      },  {
+        path: '/activities',
+        component: Activities,
+        meta: {
+          title: '营销管理',
+          icon: FunctionOutlined,
+        },
+        children: [
+          {
+            path: '/activities/minuse',
+            component: Minus,
+            meta: {
+              title: '满减活动',
+            },
+          },
+        ],
       }, {
         path: '/sale',
         component: Sale,
         meta: {
           title: '销售查看',
-          icon: RiseOutlined,
+          icon: SecurityScanOutlined,
         },
       },
       {
