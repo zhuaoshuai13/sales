@@ -5,6 +5,8 @@ const API = {
   SELLING: '/selling',
   GET_SALES: '/getSales',
   FOMR: '/form',
+  GET_ACTIVE: '/getActive',
+  CHANGE_ACTIVE: '/changeActive',
 }
 
 export default API

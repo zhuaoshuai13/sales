@@ -8,8 +8,8 @@ import Sale from '../views/admins/sale'
 import Self from '../views/employees/self';
 import Market from '../views/sales/market';
 import Detail from '../views/admins/detail';
-import Activities from '../views/marketing/activities'
-import Minus from '../views/marketing/activities/minus';
+import Activities from '../views/admins/marketing/activities'
+import Minus from '../views/admins/marketing/activities/minus';
 import {
   HomeOutlined,
   ZoomInOutlined,

@@ -27,7 +27,22 @@ export const getSales = () => request({
   method: 'GET',
 })
 
+// 得到商品图片
 export const getForm = () => request({
   url: API.FOMR,
   method: 'GET',
+})
+
+// 得到商品活动
+export const getActive = () => request({
+  url: API.GET_ACTIVE,
+  method: 'GET',
+})
+
+// 改变商品状态
+
+export const changeActive = (data) => request({
+  url: API.CHANGE_ACTIVE,
+  method: 'PUT',
+  data: data,
 })
