@@ -6,7 +6,7 @@ import { login } from '../../api/user';
 import { loginSuccessAction } from '../../reducers/user';
 import { Redirect } from 'react-router-dom'
 import loginsSvg from '../../assets/imgs/login.svg'
-import fish from '../../assets/js/fish.js'
+// import fish from '../../assets/js/fish.js'
 import './style.less'
 
 function Login() {
