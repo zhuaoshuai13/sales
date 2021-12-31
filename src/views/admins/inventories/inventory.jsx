@@ -5,7 +5,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { getStore } from '../../../api/store';
 import { Link } from 'react-router-dom';
 export default function Inventory(props) {
-  const [current, setCurrent] = localStorage.getItem('current') ? useState(parseInt(localStorage.getItem('current'))) : useState(1)
+  const [current, setCurrent] = localStorage.getItem('current') ? useState(parseInt(localStorage.getItem('current'))) : useState(parseInt(1))
   const [data, setDate] = useState([])
   useEffect(() => {
     getStore().then((data) => {
@@ -98,13 +98,11 @@ export default function Inventory(props) {
     {
       title: '图片',
       key: 'name',
-      render: (text) => {
-        console.log(text.color);
-        return (
-          <Image
-            width={40}
-            src={`http://localhost:9527/upload/${text.commodity_id}${text.color}.jpg`}
-            fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIAAADDCAYAAADQv
+      render: (text) => (
+        <Image
+          width={40}
+          src={`http://sb.zhuaoshuai.com/upload/${text.commodity_id}${text.color}.jpg`}
+          fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIAAADDCAYAAADQv
             c6UAAABRWlDQ1BJQ0MgUHJvZmlsZQAAKJFjYGASSSwoyGFhYGDIzSspCnJ3UoiIjFJgf8LAwS
             DCIMogwMCcmFxc4BgQ4ANUwgCjUcG3awyMIPqyLsis7PPOq3QdDFcvjV3jOD1boQVTPQrgSkkt
             TgbSf4A4LbmgqISBgTEFyFYuLykAsTuAbJEioKOA7DkgdjqEvQHEToKwj4DVhAQ5A9k3gGyB5Ix
@@ -131,9 +129,8 @@ export default function Inventory(props) {
             BEKNdtQcwJEyNmoFCJAhELNNtScABFyNiqFCBChULMNNSdAhJyNSiECRCjUbEPNCRAhZ6NSiAARCjXbUHMCRMjZqBQiQIRCzTbUnAARcjYqhQgQoVCzD
             TUnQIScjUohAkQo1GxDzQkQIWejUogAEQo121BzAkTI2agUIkCEQs021JwAEXI2KoUIEKFQsw01J0CEnI1KIQJEKNRsQ80JECFno1KIABEKNdtQcwJ
             EyNmoFCJAhELNNtScABFyNiqFCBChULMNNSdAhJyNSiEC/wGgKKC4YMA4TAAAAABJRU5ErkJggg=="
-          />
-        )
-      },
+        />
+      ),
     },
     {
       title: '种类',

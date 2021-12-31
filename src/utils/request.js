@@ -1,6 +1,5 @@
 import axios from 'axios';
 const service = axios.create({
-  // baseURL: 'http://localhost:9527',
   baseURL: 'http://sb.zhuaoshuai.com',
   timeout: 10000,
 })

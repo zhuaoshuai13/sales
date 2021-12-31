@@ -48,7 +48,8 @@ export default function Purchase() {
       number: 32,
     });
   }
-  const EditableCell = ({editing, dataIndex, title, inputType, record, index, children, ...restProps}) => {
+  const EditableCell = ({ editing, dataIndex, title, inputType, record, index, children, ...restProps
+  }) => {
     const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
     return (
       <td{...restProps}>

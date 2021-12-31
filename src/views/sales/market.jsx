@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import {getStore, sellStore} from '../../api/store'
-import { Table, Button, Input, Space, Row, Col, Form, Drawer, Select, message, InputNumber } from 'antd';
+import {getActive, getStore, sellStore} from '../../api/store'
+import { Table, Button, Input, Space, Row, Col, Form, Drawer, Select, message, InputNumber, List } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-
 import './market.less'
 export default function Market() {
   const [searchText, setSearchText] = useState('')
@@ -11,13 +10,21 @@ export default function Market() {
   const [data, setDate] = useState([])
   const [choose, setChoose] = useState([])
   const [max, setMax] = useState(0)
+  const [active, setActive] = useState([])
+  const [activeId, setActiveId] = useState(null)
+  const [allList, setAllList] = useState([])
+  const [nowList, setNowList] = useState(['暂无优惠'])
   useEffect(() => {
     getStore().then((data) => {
       data.forEach((cur) => {cur.key = cur.id})
       setDate(data)
     })
+    getActive().then((active) => {
+      const tempActive = active.filter((cur) => cur.type)
+      setActive(tempActive)
+    })
   }, [])
-
+  // console.log(active);
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
@@ -92,6 +99,8 @@ export default function Market() {
     setSearchText('')
   };
   const getData = (newData) => {
+    allActive()
+    setNowList(['暂无优惠'])
     console.log(newData.number);
     setMax(newData.number)
     newData.sellingNumber = 1
@@ -193,6 +202,22 @@ export default function Market() {
   const warning = () => {
     message.warning(`改商品库存最多为${max}`);
   };
+  const allActive = () => {
+    const tempList = [];
+    for (let i = 0; i < active.length; i++) {
+      tempList.push(`${active[i].category} 满 ${active[i].full} 减 ${active[i].minus}`)
+    }
+    console.log(tempList);
+    setAllList(tempList)
+  }
+
+  // allActive()
+  const nowActive = (id) => {
+    console.log(id);
+    const temp = active.filter((cur) => cur.id === id)
+    console.log(temp);
+    temp.length ? setNowList([`现在享受的是${temp[0].category} 满 ${temp[0].full} 减 ${temp[0].minus}`]) : setNowList(['暂无优惠'])
+  }
   const changeNumber = (e) => {
     console.log(e);
     if (e > max) {
@@ -201,8 +226,34 @@ export default function Market() {
     }
     let temp =  choose
     temp.sellingNumber = e
+    console.log(temp.category);
     temp.total_price = choose.sellingNumber * choose.selling_price
-
+    console.log(temp.total_price);
+    const newActive = active.filter((cur) => cur.category === temp.category)
+    console.log(newActive);
+    if (newActive.length) {
+      for (let i = 0; i < newActive.length; i++) {
+        if (temp.total_price < newActive[i].full) {
+          if (i === 0) {
+            temp.total_price = temp.total_price + 0
+            nowActive(0)
+            break;
+          }
+          if (i > 0) {
+            console.log('i>0');
+            temp.total_price -= newActive[i - 1].minus
+            nowActive(newActive[i - 1].id)
+          }
+        }
+      }
+      if (temp.total_price >= newActive[newActive.length - 1].full) {
+        console.log('imax');
+        temp.total_price -= newActive[newActive.length - 1].minus
+        // setActiveId(active[active.length - 1].id)
+        nowActive(newActive[newActive.length - 1].id)
+      }
+    }
+    // nowActive(activeId)
     setChoose(temp)
     form.setFieldsValue(temp)
   }
@@ -347,6 +398,28 @@ export default function Market() {
             </Col>
           </Row>
         </Form>
+        <hr />
+        当前享受的优惠
+        <List
+          bordered
+          dataSource={nowList}
+          renderItem={(item) => (
+            <List.Item>
+              {item}
+            </List.Item>
+          )}
+        />
+        <hr />
+        店铺现有活动
+        <List
+          bordered
+          dataSource={allList}
+          renderItem={(item) => (
+            <List.Item>
+              {item}
+            </List.Item>
+          )}
+        />
       </Drawer>
     </div>
   )

@@ -2,19 +2,12 @@ import React, {useEffect, useState} from 'react'
 import { useSelector, useDispatch  } from 'react-redux';
 import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import './style.less'
 import { login } from '../../api/user';
-import { loginSuccessAction } from '../../actions/user';
-// import { connect } from 'react-redux'
+import { loginSuccessAction } from '../../reducers/user';
 import { Redirect } from 'react-router-dom'
 import loginsSvg from '../../assets/imgs/login.svg'
-// const loginsSvg = require('../../assets/imgs/login.png')
-// let script = document.createElement('script');
-// script.className = 'test'
-// script.type = 'text/javascript'
-// script.async = true;
-// script.src = '//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js';
-// document.head.appendChild(script);
+// import fish from '../../assets/js/fish.js'
+import './style.less'
 
 function Login() {
   const token = useSelector((state) => state.user.token)
@@ -22,7 +15,6 @@ function Login() {
   const onFinish = (values) => {
     login(values).then((data) => {
       if (data.isSuccess) {
-        console.log(data);
         dispatch(loginSuccessAction(data))
       } else {
         message.error(`${data.message}`, 0.5);
@@ -34,7 +26,10 @@ function Login() {
   return token ? <Redirect to="/dashboard" /> : (
     <>
       <h1>欢迎使用小天才店铺管理系统</h1>
+<<<<<<< HEAD
       <h2>我们已经陪伴你234天</h2>
+=======
+>>>>>>> ff1d939a3ac57ac0ab0d805b62d4b04f87e41e3a
       <div className="box">
         <b>欢迎登录</b>
         <i>服装店铺管理系统</i>
