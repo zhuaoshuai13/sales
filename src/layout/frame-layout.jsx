@@ -11,11 +11,6 @@ const { Header, Content, Footer, Sider } = Layout;
 const { confirm } = Modal;
 const { SubMenu } = Menu;
 function FrameLayout({route, location}) {
-<<<<<<< HEAD
-  console.log(location.pathname);
-  const match = matchRoutes(route.children, location.pathname)
-=======
->>>>>>> ff1d939a3ac57ac0ab0d805b62d4b04f87e41e3a
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const history = useHistory()
