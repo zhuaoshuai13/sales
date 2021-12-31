@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Form, Input, Button, Select, Col, ConfigProvider, Table, InputNumber, Popconfirm, Typography, notification,
+import { Form, Input, Button, Select, ConfigProvider, Table, InputNumber, Popconfirm, Typography, notification,
 } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import './purchase.less'
@@ -48,23 +48,7 @@ export default function Purchase() {
       number: 32,
     });
   }
-  const EditableCell = ({
-    // eslint-disable-next-line react/prop-types
-    editing,
-    // eslint-disable-next-line react/prop-types
-    dataIndex,
-    // eslint-disable-next-line react/prop-types
-    title,
-    // eslint-disable-next-line react/prop-types
-    inputType,
-    // eslint-disable-next-line react/prop-types
-    record,
-    // eslint-disable-next-line react/prop-types
-    index,
-    // eslint-disable-next-line react/prop-types
-    children,
-    ...restProps
-  }) => {
+  const EditableCell = ({editing, dataIndex, title, inputType, record, index, children, ...restProps}) => {
     const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
     return (
       <td{...restProps}>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { getForm } from '../../api/store';
 import { Upload, Modal, Table, Tag, Space  } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -16,15 +16,19 @@ export default function Self() {
       reader.onerror = (error) => reject(error);
     });
   }
-  console.log(form);
+  const dataRef = useRef()
+  useEffect(() => {
+    dataRef.current = form
+  }, [form])
+  console.log(dataRef.form);
   const [state, setState] = useState({
     previewVisible: false,
     previewImage: '',
     previewTitle: '',
     fileList: [
-      {
-        url: 'http://localhost:9527/upload/7788白色.jpg',
-      },
+      // {
+      //   url: 'http://localhost:9527/upload/7788白色.jpg',
+      // },
     ],
   })
 
@@ -50,7 +54,6 @@ export default function Self() {
   const handleChange = ({ fileList }) => setState({ fileList });
 
   const { previewVisible, previewImage, fileList, previewTitle } = state;
-  console.log(fileList.length);
   const uploadButton = (
     <div>
       <PlusOutlined />

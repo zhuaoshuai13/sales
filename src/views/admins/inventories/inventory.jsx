@@ -5,7 +5,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { getStore } from '../../../api/store';
 import { Link } from 'react-router-dom';
 export default function Inventory(props) {
-  const [current, setCurrent] = useState(parseInt(localStorage.getItem('current')))
+  const [current, setCurrent] = localStorage.getItem('current') ? useState(parseInt(localStorage.getItem('current'))) : useState(1)
   const [data, setDate] = useState([])
   useEffect(() => {
     getStore().then((data) => {
@@ -85,7 +85,6 @@ export default function Inventory(props) {
       ),
   });
   const detailData = (data) => {
-    // eslint-disable-next-line react/prop-types
     // props.history.push({pathname: '../../detail', params: data});
   }
   const columns = [

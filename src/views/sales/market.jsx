@@ -22,12 +22,7 @@ export default function Market() {
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
         <Input
-          ref={(node) => {
-            // console.log('node', node);
-            // searchInput = node;
-            // setSearchInput(node)
-            // console.log(searchInput.select);
-          }}
+          ref={(node) => {}}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
           onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
